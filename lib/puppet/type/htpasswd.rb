@@ -10,13 +10,14 @@ module Puppet
 
     ensurable
 
-    newparam(:name, :namevar => true) do
-      desc "The user to manage"
+    newparam(:name) do
+      desc "The resource name"
       isnamevar
     end
 
     newproperty(:passwd) do
       desc "The plain password for the given user"
+      isrequired
       munge do |value|
         "{SHA}#{Base64.encode64(Digest::SHA1.digest(value)).chomp}"
       end
@@ -32,6 +33,5 @@ module Puppet
         end
       end
     end
-
   end
 end
