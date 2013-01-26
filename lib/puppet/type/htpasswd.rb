@@ -1,7 +1,7 @@
 module Puppet
   newtype(:htpasswd) do
     @doc = "Manage an Apache style htpasswd file
-  
+
     htpasswd { \"user\":
       ensure => present,
       cryptpasswd => \"MrC7Aq3qPKPaK\",

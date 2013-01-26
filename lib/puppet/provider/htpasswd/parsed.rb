@@ -2,9 +2,9 @@ require 'puppet/provider/parsedfile'
 htpasswd_file = "/etc/httpd/conf/htpasswd"
 
 Puppet::Type.type(:htpasswd).provide(
-  :parsed, 
-  :parent => Puppet::Provider::ParsedFile, 
-  :default_target => htpasswd_file, 
+  :parsed,
+  :parent => Puppet::Provider::ParsedFile,
+  :default_target => htpasswd_file,
   :filetype => :flat
 ) do
 
