@@ -6,6 +6,11 @@ module Puppet
       ensure => present,
       cryptpasswd => \"MrC7Aq3qPKPaK\",
       target => \"/etc/httpd/conf/htpasswd\",
+    }
+    htpasswd { \"user2\":
+      ensure => present,
+      passwd => \"plain password\",
+      target => \"/etc/httpd/conf/htpasswd\",
     }"
 
     ensurable
@@ -17,6 +22,10 @@ module Puppet
 
     newproperty(:cryptpasswd) do
       desc "The encrypted password for the given user"
+    end
+
+    newproperty(:passwd) do
+      desc "The plain password for the given user"
     end
 
     newproperty(:target) do

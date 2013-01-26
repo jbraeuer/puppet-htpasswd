@@ -1,4 +1,7 @@
 require 'puppet/provider/parsedfile'
+require 'digest/sha1'
+require 'base64'
+
 htpasswd_file = "/etc/httpd/conf/htpasswd"
 
 Puppet::Type.type(:htpasswd).provide(
@@ -12,7 +15,16 @@ Puppet::Type.type(:htpasswd).provide(
 
   text_line :comment, :match => /^#/;
   text_line :blank, :match => /^\s*$/;
-  record_line :parsed, :fields => %w{name cryptpasswd}, :joiner => ':', :separator => ':'
-
+  record_line(:parsed,
+              :fields => %w{name cryptpasswd},
+              :joiner => ':',
+              :separator => ':',
+              :to_line => proc { |item|
+                if item[:cryptpasswd]
+                  return "#{item[:name]}:#{item[:cryptpasswd]}"
+                end
+                if item[:passwd]
+                  return "#{item[:name]}:{SHA}#{Base64.encode64(Digest::SHA1.digest(item[:passwd])).chomp}"
+                end
+              })
 end
-
