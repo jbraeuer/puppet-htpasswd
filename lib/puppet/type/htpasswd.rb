@@ -2,11 +2,6 @@ module Puppet
   newtype(:htpasswd) do
     @doc = "Manage an Apache style htpasswd file
 
-    htpasswd { \"user\":
-      ensure => present,
-      cryptpasswd => \"MrC7Aq3qPKPaK\",
-      target => \"/etc/httpd/conf/htpasswd\",
-    }
     htpasswd { \"user2\":
       ensure => present,
       passwd => \"plain password\",
@@ -20,12 +15,11 @@ module Puppet
       isnamevar
     end
 
-    newproperty(:cryptpasswd) do
-      desc "The encrypted password for the given user"
-    end
-
     newproperty(:passwd) do
       desc "The plain password for the given user"
+      munge do |value|
+        "{SHA}#{Base64.encode64(Digest::SHA1.digest(value)).chomp}"
+      end
     end
 
     newproperty(:target) do

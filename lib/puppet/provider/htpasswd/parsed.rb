@@ -16,15 +16,7 @@ Puppet::Type.type(:htpasswd).provide(
   text_line :comment, :match => /^#/;
   text_line :blank, :match => /^\s*$/;
   record_line(:parsed,
-              :fields => %w{name cryptpasswd},
+              :fields => %w{name passwd},
               :joiner => ':',
-              :separator => ':',
-              :to_line => proc { |item|
-                if item[:cryptpasswd]
-                  return "#{item[:name]}:#{item[:cryptpasswd]}"
-                end
-                if item[:passwd]
-                  return "#{item[:name]}:{SHA}#{Base64.encode64(Digest::SHA1.digest(item[:passwd])).chomp}"
-                end
-              })
+              :separator => ':')
 end
