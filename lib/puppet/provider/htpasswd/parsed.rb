@@ -1,7 +1,4 @@
 require 'puppet/provider/parsedfile'
-require 'digest/sha1'
-require 'base64'
-
 htpasswd_file = "/etc/httpd/conf/htpasswd"
 
 Puppet::Type.type(:htpasswd).provide(

@@ -1,3 +1,6 @@
+require 'digest/sha1'
+require 'base64'
+
 module Puppet
   newtype(:htpasswd) do
     @doc = "Manage an Apache style htpasswd file
