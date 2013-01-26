@@ -30,13 +30,13 @@ module Puppet
 
     newproperty(:target) do
       desc "Location of the htpasswd file"
-      defaultto {
+      defaultto do
         if @resource.class.defaultprovider.ancestors.include?(Puppet::Provider::ParsedFile)
           @resource.class.defaultprovider.default_target
         else
           nil
         end
-      }
+      end
     end
 
   end
